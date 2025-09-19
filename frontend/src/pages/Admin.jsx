@@ -68,7 +68,6 @@ export default function AdminPanel() {
   };
 
   const handleCreate = () => {
-    // if (!form.title || !form.start || !form.end) return;
     console.log("first")
     console.log(form)
     
