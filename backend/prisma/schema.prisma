@@ -1,0 +1,50 @@
+datasource db {
+      provider = "mysql" 
+      url      = env("DATABASE_URL")
+}
+
+generator client {
+      provider = "prisma-client-js"
+      // output = "../node_modules/@prisma/client" // Optional: custom output path
+}
+
+
+// Users
+enum Role {
+  admin
+  user   
+}
+
+model Users {
+  id        String     @id @default(uuid())   
+  name      String
+  email     String     @unique
+  password  String
+  role      Role       @default(user)
+  createdAt DateTime   @default(now())
+}
+
+// All Tasks
+enum Status {
+  on_going
+  completed
+}
+
+model AllTasks {
+
+  id        String   @id @default(uuid())   
+  title     String
+  s_date    String?
+  e_date    String?
+  em_name   String
+  em_id     String?
+  hours     String  @default("0")
+  period    String  @default("N/A")
+  allocation String?
+  status    Status   @default(on_going)
+  action    String?  
+  createdAt DateTime @default(now())
+  
+
+}
+

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `alltasks` ADD COLUMN `hours` VARCHAR(191) NOT NULL DEFAULT '0',
+    ADD COLUMN `period` VARCHAR(191) NOT NULL DEFAULT 'N/A';
