@@ -1,37 +1,15 @@
 
 import { useEffect, useState } from "react";
 import BackButton from "../components/BackButton";
+  import { useNavigate } from 'react-router-dom';
 import Appbar from "../components/Appbar"
 import axios from "axios";
+import toast from "react-hot-toast";
 import { BACKEND_URL } from "../../cofig";
+
+
 export default function AdminPanel() {
   const [allUsers, setAllUsers] = useState([])
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Sample Task",
-      start: "2025-09-10",
-      end: "2025-09-20",
-      assigned: "Regular User",
-      status: "in_progress",
-    },
-    {
-      id: 3,
-      title: "fdsaf",
-      start: "2025-09-16",
-      end: "2025-09-17",
-      assigned: "Regular User",
-      status: "not_started",
-    },
-    {
-      id: 2,
-      title: "Sample Task",
-      start: "2025-09-17",
-      end: "2025-09-18",
-      assigned: "Regular User",
-      status: "not_started",
-    },
-  ]);
 
   const [form, setForm] = useState({
     title: "",
@@ -40,15 +18,31 @@ export default function AdminPanel() {
     em_name: "",
     hours: 0,
     period: "Day",
-    description: "",
+    // description: "",
   });
-  
+
+  const navigate = useNavigate();
   useEffect(()=>{
     const axiosData = async() =>{
     const res = await axios.get(`${BACKEND_URL}/api/users/allusers`)
+
+    setAllUsers(res.data.allUser)
+
+    
+    }
+
+    axiosData();
+  },[form])
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleCreate = async() => {
+  
     const user_info = localStorage.getItem("userInfo");
-    const token = user_info.token;
-        setAllUsers(res.data.allUser)
+    const token = JSON.parse(user_info).token
+    console.log(token)
     const taskRes = await axios.post(`${BACKEND_URL}/api/tasks/crtasks`, form,
         {headers: {
           "Content-Type": "application/json",
@@ -56,20 +50,9 @@ export default function AdminPanel() {
         }
       }
     )
-    console.log(taskRes)
-    console.log(res.data.allUser)
-
-    }
-
-    axiosData();
-  },[form])
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleCreate = () => {
-    console.log("first")
-    console.log(form)
+    toast.success("Task created successfully! ")
+    // console.log(taskRes.data)
+    navigate("/home")
     
   };
 
@@ -121,8 +104,8 @@ export default function AdminPanel() {
         <textarea
           name="description"
           placeholder="Description"
-          value={form.description}
-          onChange={handleChange}
+          // value={form.description}
+          // onChange={handleChange}
           className="border rounded w-full px-3 py-2 mb-3"
         />
         <div className="ml-5">
@@ -159,34 +142,8 @@ export default function AdminPanel() {
           Create/Assign
         </button>
       </div>
-
-      <div>
-        <h2 className="text-lg font-semibold mb-4">All Tasks</h2>
-        <table className="w-full border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="border px-3 py-2">ID</th>
-              <th className="border px-3 py-2">Title</th>
-              <th className="border px-3 py-2">Period</th>
-              <th className="border px-3 py-2">Assigned</th>
-              <th className="border px-3 py-2">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tasks.map((task) => (
-              <tr key={task.id}>
-                <td className="border px-3 py-2">{task.id}</td>
-                <td className="border px-3 py-2">{task.title}</td>
-                <td className="border px-3 py-2">
-                  {task.start} → {task.end}
-                </td>
-                <td className="border px-3 py-2">{task.assigned}</td>
-                <td className="border px-3 py-2">{task.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      
+       
 
     </div>
   );

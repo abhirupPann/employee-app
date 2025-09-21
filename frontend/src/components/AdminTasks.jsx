@@ -36,7 +36,7 @@ useEffect(() => {
   if (tasks.length === 0) return <div className="text-center font-bold">No tasks found</div>;
 
   return (
-    <div className="w-full py-5 h-screen">
+    <div className="w-full py-5 h-full">
       <div className="head flex items-center justify-between">
         <h1 className="text-2xl font-bold">Tasks</h1>
       </div>
@@ -61,10 +61,7 @@ useEffect(() => {
         </thead>
         <tbody>
           {tasks.map((task, index) =>{
-            let star_d = task.s_date.split("T")
-            star_d = star_d[0]
-            let end_d = task.s_date.split("T")
-            end_d = end_d[0]
+
             return(
             <tr
               key={index}
@@ -74,10 +71,10 @@ useEffect(() => {
               <td className="p-4 text-center flex flex-col gap-2 items-center">
                 
                <div>{task.title}</div>
-               <div className=" w-[7vw] h-[4vh] rounded-sm text-black bg-amber-600 flex items-center justify-center text-sm">20 hrs/week</div>
+               <div className=" w-[7vw] h-[4vh] rounded-sm text-black bg-amber-600 flex items-center justify-center text-sm">{`${task.hours}hrs/ ${task.period}`}</div>
                 </td>
-              <td className="p-4 text-center">{star_d}</td>
-              <td className="p-4 text-center">{end_d}</td>
+              <td className="p-4 text-center">{task.s_date}</td>
+              <td className="p-4 text-center">{task.e_date}</td>
               {task.em_name && (
                 <td className="p-4 text-center">{task.em_name}</td>
               )}

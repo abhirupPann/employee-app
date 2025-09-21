@@ -1,16 +1,7 @@
-todo 
+todo/errors
 
 //how to change status of a ongoing task?(just 1 task table then filter)
 //enter assigned by
-
-
-
-
-user token - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU1MDQxZGJlLWQ0MDMtNDk3Zi04MDZhLWI3NWE1OTIyZTg2NyIsImlhdCI6MTc1ODE4MDEzOSwiZXhwIjoxNzU4Nzg0OTM5fQ.G40KE3U9ZGqotqCTK95l_uEPwFhPPR7QkSnnbshXefs
-
-
-admin token - 
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI3NmU4ZDM2LTZjZGQtNDBiNC1hMTQ2LTExZDI3ZDdmZTM3MiIsImlhdCI6MTc1ODE4MTYzMywiZXhwIjoxNzU4Nzg2NDMzfQ.gVm6XSJgEMoh_T6sh1Akr4D9gzlh_1zb4AaLws5KrKU
-
-
-2025-09-18T10:30:00+05:30
+//user allocation
+//tasks update homepage
+//calendar on month change

@@ -37,7 +37,7 @@ exports.registerUser = async (req, res) => {
       role: user.role
     });
   } catch (err) {
-    console.error("Registration Error:", err);
+    console.error("User already exists:", err);
     res.status(500).json({ message: 'Registration Failed' });
   }
 };

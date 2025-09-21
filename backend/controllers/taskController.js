@@ -12,10 +12,12 @@ const createTasks = async(req, res)=>{
             })
           }
 
-          const {title, s_date, e_date, em_name, } = req.body;
+          let {title, s_date, e_date, em_name, hours, period } = req.body;
           const status = "on_going"
           const action = "NIL"
-          const empres = await prisma.users.findUnique({
+          s_date = s_date.split('-').reverse().join('-')
+          e_date = e_date.split('-').reverse().join('-')
+          const empres = await prisma.users.findFirst({
             where:{
               name: em_name
             },
@@ -34,7 +36,9 @@ const createTasks = async(req, res)=>{
                 em_name,
                 status, 
                 action,
-                em_id
+                em_id,
+                hours,
+                period
             }
           })
           res.status(201).json({
@@ -65,6 +69,8 @@ const getTasks = async(req, res)=>{
                 e_date: true, 
                 status: true, 
                 action: true,
+                hours: true,
+                period: true
              
             }
            }
@@ -86,9 +92,20 @@ const getCalTasks = async(req,res)=>{
         
         const tasks = await prisma.allTasks.findMany({
           where:{
-            s_date: date
+            s_date: {
+              endsWith: date
+            }
+          },
+          select:{
+            em_name: true,
+            hours: true,
+            period: true,
+            title: true,
+            s_date: true,
+            e_date: true,
+
           }
-        })
+        }) 
         res.status(201).json(tasks);
       } catch (err) {
             console.error("Get Calendar Tasks", err);

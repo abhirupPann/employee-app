@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp'
 import Admin from './pages/Admin'
 
 import Home from './pages/Home'
+import { Toaster } from 'react-hot-toast'
 
 export default function App() {
 
@@ -15,6 +16,7 @@ export default function App() {
   // }
   return (
     <div>
+    <Toaster/>
     <Routes>
       <Route path="/" element={<Navigate to="/register" />} />
       <Route path='/home' element={<Home/>}/>

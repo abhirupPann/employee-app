@@ -4,7 +4,9 @@ import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import BackButton from "../components/BackButton";
 import Appbar from "../components/Appbar"
-
+import { useEffect } from "react";
+import { BACKEND_URL } from "../../cofig";
+import axios from "axios";
 dayjs.extend(isBetween);
 export default function Calendar() {
 
@@ -37,6 +39,23 @@ export default function Calendar() {
     );
   };
 
+  useEffect(()=>{
+    const mon = month.split('-').reverse().join('-');
+    const userInfo = localStorage.getItem("userInfo");
+    const token = JSON.parse(userInfo).token;
+    console.log(token)
+    const body = mon;
+    const axiosCall = async()=>{
+          const res = await axios.get(`${BACKEND_URL}/api/tasks/getcal`, body ,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      console.log(res.data)
+              }
+    axiosCall();
+  },[month])
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <Appbar/>
@@ -51,7 +70,8 @@ export default function Calendar() {
         <input
           type="month"
           value={month}
-          onChange={(e) => setMonth(e.target.value)}
+          onChange={(e) => {setMonth(e.target.value)
+          }}
           className="border rounded px-3 py-2"
         />
       </div>
